@@ -244,7 +244,7 @@ M.path = {
         return stat ~= nil
     end,
     join = function(...)
-        return table.concat(vim.tbl_flatten({ ... }), path_separator):gsub(path_separator .. "+", path_separator)
+        return table.concat(vim.iter({ ... }):flatten():totable(), path_separator):gsub(path_separator .. "+", path_separator)
     end,
 }
 
@@ -252,7 +252,7 @@ M.path = {
 ---@vararg string patterns
 ---@return fun(startpath: string): string|nil root_dir
 M.root_pattern = function(...)
-    local patterns = vim.tbl_flatten({ ... })
+    local patterns = vim.iter({ ... }):flatten():totable()
 
     local function matcher(path)
         if not path then
